@@ -13,7 +13,8 @@ Supports various data transformation operations, making it ideal for data cleani
 
 Integrates well with other libraries in the Python ecosystem, such as Matplotlib and Seaborn, for visualization purposes.
 
-Can easily convert code to work with Snowflake or Big Query using tools like Ponder
+Can easily convert code to work with Snowflake or Big Query using tools like
+Ponder
 
 Cons:
 
@@ -27,12 +28,15 @@ import matplotlib.pyplot as plt
 
 df = pd.read_csv("alta-noaa-1980-2019.csv")
 
+
 def preprocessDate(column="DATE"):
     df[column] = pd.to_datetime(df[column])
     df["YEAR"] = df[column].dt.year
     df["MONTH"] = df[column].dt.month
     df["DAY"] = df[column].dt.day
     return df
+
+
 def plotHistogram(column="SNWD", title="Histogram of Snow Depth"):
     plt.figure(dpi=125)
     plt.hist(df[column])
@@ -41,8 +45,10 @@ def plotHistogram(column="SNWD", title="Histogram of Snow Depth"):
     plt.xlabel("Snow Depth")
     return plt
 
-histogram = plotHistogram() #Default
+
+histogram = plotHistogram()  # Default
 histogram.show()
+
 
 def plotScatter(xAxis="TOBS", yAxis="SNOW", title="Snow Fall with respect to "
                                                   "Temperature"):
@@ -53,18 +59,23 @@ def plotScatter(xAxis="TOBS", yAxis="SNOW", title="Snow Fall with respect to "
     plt.xlabel("Temperature (Observed)")
     return plt
 
-scatter = plotScatter() # Default
+
+scatter = plotScatter()  # Default
 scatter.show()
 
-def plotLine(df, columns=["TMIN", "TMAX", "TOBS"], title="Temperature changes "
-                                                     "between 1980 and 2019"):
+
+def plotLine(df, columns=None, title="Temperature changes "
+                                     "between 1980 and 2019"):
+    if columns is None:
+        columns = ["TMIN", "TMAX", "TOBS"]
     plt.figure(dpi=125)
     plt.plot(df[columns], label=columns)
     plt.title(title)
     plt.legend()
     return plt
 
-line = plotLine(df=df) # Default
+
+line = plotLine(df=df)  # Default
 line.show()
 
 # Group By Year
